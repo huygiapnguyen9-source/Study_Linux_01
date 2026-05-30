@@ -1,0 +1,14 @@
+Tóm tắt lỗi S_IRUSR, S_IWUSR trong main.cpp
+
+1) main.cpp hiện include: <fcntl.h>, <unistd.h>, <cstring>, <cerrno>.
+   Trong POSIX, S_IRUSR/S_IWUSR thường được khai báo trong <sys/stat.h>.
+   Vì main.cpp chưa include <sys/stat.h> nên compiler có thể báo S_IRUSR/S_IWUSR chưa được khai báo.
+
+2) File main.cpp đang bị cắt dở/không đóng ngoặc đúng ở cuối:
+   if(fd_out < 0){ std :: cerr<< "L" }
+   Việc thiếu } có thể làm compiler báo lỗi lan man.
+
+Khuyến nghị fix (không áp dụng vì người dùng yêu cầu chỉ kiểm tra):
+- Thêm: #include <sys/stat.h>
+- Sửa lại cấu trúc code/đóng ngoặc và kết thúc main().
+
