@@ -1,0 +1,22 @@
+Tóm tắt & nhận xét về chương trình `fork()` (Study_Linux_02)
+
+1) `fork()` chia chương trình thành 2 luồng xử lý:
+   - PID < 0: lỗi tạo tiến trình
+   - PID == 0: tiến trình con
+   - PID > 0: tiến trình cha (giá trị là PID của tiến trình con)
+
+2) PID được in rõ ràng:
+   - Child dùng `getpid()` và `getppid()` để hiển thị mối quan hệ cha-con.
+
+3) Mô phỏng công việc bằng `sleep()`:
+   - Child sleep 3 giây (mô phỏng xử lý)
+   - Parent sleep 1 giây (mô phỏng làm việc khác)
+   Điều này giúp thấy thứ tự log theo thời gian.
+
+4) Đúng vòng đời tiến trình:
+   - Parent dùng `wait(&status)` để chờ child kết thúc.
+   - Nhờ đó tránh Zombie Process.
+
+5) Lưu ý khi build trên Windows:
+   - CMake có thể báo thiếu compiler/toolchain (ví dụ: không có nmake/MinGW phù hợp). Đây là vấn đề môi trường build, không phải lỗi logic code.
+
